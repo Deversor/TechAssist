@@ -69,3 +69,33 @@ TEMPLATES = [
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# ==============================================================================
+# ADDED CORE CONFIGURATIONS (APPENDED BELOW)
+# ==============================================================================
+
+# Security Cryptographic Key (Required for sessions/cookies)
+SECRET_KEY = 'django-insecure-local-development-key-change-this-in-production'
+
+# Root URL configuration route
+ROOT_URLCONF = 'projectsite.urls'
+
+# WSGI application entry point
+WSGI_APPLICATION = 'projectsite.wsgi.application'
+
+# Database Configuration Engine
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+# Internationalization / Localization
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'
+USE_I18N = True
+USE_TZ = True
+
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
