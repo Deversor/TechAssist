@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+DEBUG = True
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'techassist.pythonanywhere.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
