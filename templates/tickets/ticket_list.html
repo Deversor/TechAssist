@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Registry Queue | TechAssist{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-0">Tickets System Registry</h2>
+        <p class="text-muted mb-0">Role-filtered context tracking view interface.</p>
+    </div>
+    <a href="{% url 'ticket-create' %}" class="btn btn-primary shadow-sm">+ New Support Request</a>
+</div>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-header bg-white py-3 d-flex justify-content-end align-items-center gap-2">
+        <span class="text-muted small fw-bold">Order Evaluation Matrix:</span>
+        <a href="?sort_by=-created_at" class="btn btn-sm {% if request.GET.sort_by == '-created_at' or not request.GET.sort_by %}btn-dark{% else %}btn-outline-secondary{% endif %}">Newest First</a>
+        <a href="?sort_by=priority" class="btn btn-sm {% if request.GET.sort_by == 'priority' %}btn-dark{% else %}btn-outline-secondary{% endif %}">Priority Escalation</a>
+    </div>
+
+    <div class="list-group list-group-flush">
+        {% for ticket in tickets %}
+        <div class="list-group-item p-4 hover-shadow transition">
+            <div class="d-flex w-100 justify-content-between align-items-start mb-2">
+                <div>
+                    <h5 class="mb-1 fw-bold text-primary">{{ ticket.title }}</h5>
+                    <span class="badge bg-light text-dark border me-2">Category: {{ ticket.category }}</span>
+                    <span class="small text-muted">Created {{ ticket.created_at|timesince }} ago</span>
+                </div>
+                <span class="badge p-2 {% if ticket.status == 'OPEN' %}bg-primary{% elif ticket.status == 'RESOLVED' %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                    {{ ticket.get_status_display }}
+                </span>
+            </div>
+            <p class="text-secondary mb-3">{{ ticket.description|truncatewords:40 }}</p>
+            <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded">
+                <span class="small text-muted">📍 Location context: <strong>{{ ticket.building }}</strong>, Room <strong>{{ ticket.room_number }}</strong></span>
+                <span class="small text-muted">Assignee: <strong>{{ ticket.assigned_to.username|default:"Unassigned" }}</strong></span>
+            </div>
+        </div>
+        {% empty %}
+        <div class="p-5 text-center text-muted">
+            <p class="mb-0">Your workspace is totally clear. No tracked issue tickets found.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <div class="card-footer bg-white py-3">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-item page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">Previous</a>
+                </li>
+                {% endif %}
+                
+                <li class="page-item active"><span class="page-link">Page {{ page_obj.number }} of {{ paginator.num_pages }}</span></li>
+                
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
