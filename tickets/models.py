@@ -55,5 +55,5 @@ class Comment(models.Model):
 
 class Attachment(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='attachments')
-    file_path = models.FileField(upload_file_to='ticket_attachments/')
+    file_path = models.FileField(upload_to='ticket_attachments/')
     upload_date = models.DateTimeField(auto_now_add=True)
