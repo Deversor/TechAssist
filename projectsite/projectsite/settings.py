@@ -1,6 +1,7 @@
 # projectsite/settings.py
 import os
 from pathlib import Path
+import socket
 
 # 1. Core Paths & System Settings
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +36,16 @@ INSTALLED_APPS = [
     'pwa',
 ]
 
-SITE_ID = 1
+if "pythonanywhere" in socket.gethostname():
+    SITE_ID = 2 #for techassist.pyhtonanywhere.com
+else:
+    SITE_ID = 1 #for local: 127.0.0.1:8000
+
+#Django-Allauth Framework Brhavior Tweaks
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'account_login'
 
 # 3. Security, Authentication & Session Routing
 AUTHENTICATION_BACKENDS = [
