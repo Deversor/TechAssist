@@ -7,7 +7,7 @@ import socket
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-local-development-key-change-this-in-production'
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'techassist.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'techassist1.pythonanywhere.com']
 ROOT_URLCONF = 'projectsite.urls'
 WSGI_APPLICATION = 'projectsite.wsgi.application'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -21,17 +21,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    
+
     # Custom Application Module
     'tickets',
     'widget_tweaks',
-    
+
     # Django AllAuth Architecture
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    
+
     # Progressive Web Application Container
     'pwa',
 ]
