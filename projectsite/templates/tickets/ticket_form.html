@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Create Ticket | TechAssist{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        
+        {% if is_qr or request.GET.building %}
+        <div class="alert alert-info border-0 shadow-sm mb-4 d-flex align-items-center" role="alert" style="background-color: #e0e7ff; color: #3730a3;">
+            <span class="fs-4 me-3">📷</span>
+            <div>
+                <strong class="d-block">QR Scanning Payload Validated!</strong>
+                <span class="small" style="color: #4338ca;">Facility vectors (Building & Room parameters) have been auto-extracted and loaded dynamically.</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-dark text-white py-3">
+                <h5 class="mb-0 fw-bold">Submit New Support Incident</h5>
+            </div>
+            <div class="card-body p-4">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary small">{{ field.label }}</label>
+                            {% if field.field.widget.input_type == "select" %}
+                                {% render_field field class="form-select" %}
+                            {% elif field.label == "Description" %}
+                                {% render_field field class="form-control" rows="4" placeholder="Describe the hardware, network, or software error in detail..." %}
+                            {% elif field.label == "Building" %}
+                                {% render_field field id="id_building" class="form-control" placeholder="Input parameters accurately..." %}
+                            {% elif field.label == "Room number" or field.label == "Room Number" %}
+                                {% render_field field id="id_room_number" class="form-control" placeholder="Input parameters accurately..." %}
+                            {% else %}
+                                {% render_field field class="form-control" placeholder="Input parameters accurately..." %}
+                            {% endif %}
+                            
+                            {% if field.help_text %}
+                                <div class="form-text text-muted">{{ field.help_text }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-end gap-2 mt-4">
+                        <a href="{% url 'ticket-list' %}" class="btn btn-outline-secondary">Discard Changes</a>
+                        <button type="submit" class="btn btn-primary px-4">Publish & Stage Ticket</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const qrBuilding = urlParams.get('building');
+        const qrRoom = urlParams.get('room');
+
+        if (qrBuilding || qrRoom) {
+            if (qrBuilding) {
+                const bField = document.getElementById('id_building');
+                if (bField) {
+                    bField.value = qrBuilding;
+                    bField.setAttribute('readonly', 'true');
+                    bField.style.backgroundColor = '#f1f5f9';
+                }
+            }
+            if (qrRoom) {
+                const rField = document.getElementById('id_room_number');
+                if (rField) {
+                    rField.value = qrRoom;
+                    rField.setAttribute('readonly', 'true');
+                    rField.style.backgroundColor = '#f1f5f9';
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

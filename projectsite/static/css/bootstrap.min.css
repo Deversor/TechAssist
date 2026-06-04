@@ -1,0 +1,102 @@
+/* static/css/bootstrap.min.css */
+:root {
+    --bg-main: #f8fafc;
+    --nav-dark: #0f172a;
+    --text-primary: #1e293b;
+    --text-muted: #64748b;
+    --indigo-accent: #6366f1;
+    --indigo-hover: #4f46e5;
+    --border-color: #e2e8f0;
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary);
+}
+
+/* Modern Header Navigation Override */
+.navbar-dark.bg-dark {
+    background-color: var(--nav-dark) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.25rem;
+    letter-spacing: -0.025em;
+    color: #ffffff !important;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #94a3b8 !important;
+    transition: color 0.15s ease;
+}
+
+.nav-link:hover, .nav-link:focus {
+    color: #ffffff !important;
+}
+
+/* Minimalist Card Design */
+.card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+}
+
+.card-header.bg-dark {
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Input Configurations fields styling override */
+.form-label {
+    color: var(--text-primary);
+    font-weight: 600 !important;
+}
+
+.form-control, .form-select {
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.95rem !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--indigo-accent) !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15) !important;
+    outline: none !important;
+}
+
+/* Accent Buttons Design */
+.btn-primary {
+    background-color: var(--indigo-accent) !important;
+    border-color: var(--indigo-accent) !important;
+    font-weight: 600 !important;
+    padding: 0.625rem 1.25rem !important;
+    border-radius: 8px !important;
+    transition: background-color 0.15s ease !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--indigo-hover) !important;
+    border-color: var(--indigo-hover) !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--border-color) !important;
+    color: var(--text-muted) !important;
+    font-weight: 600 !important;
+    padding: 0.625rem 1.25rem !important;
+    border-radius: 8px !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}

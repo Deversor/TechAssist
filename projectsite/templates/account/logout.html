@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign Out" %} | TechAssist{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center my-5 pt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm border-0 text-center p-4">
+            <div class="card-body">
+                <div class="mb-3" style="font-size: 3.5rem;">
+                    🚪
+                </div>
+                
+                <h3 class="fw-bold text-dark mb-2">{% trans "Sign Out" %}</h3>
+                <p class="text-muted small mb-4">
+                    Are you sure you want to exit your active workspace session? You will need to log back in to manage your active support tickets registry.
+                </p>
+
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-danger py-2 fw-bold" type="submit">{% trans "Confirm Disconnect" %}</button>
+                        <a href="{% url 'home' %}" class="btn btn-link text-decoration-none text-secondary btn-sm mt-1">Cancel & Return</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
