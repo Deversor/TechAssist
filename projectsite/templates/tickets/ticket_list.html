@@ -32,9 +32,21 @@
                 </span>
             </div>
             <p class="text-secondary mb-3">{{ ticket.description|truncatewords:40 }}</p>
-            <div class="d-flex justify-content-between align-items-center bg-light p-2 rounded">
-                <span class="small text-muted">📍 Location context: <strong>{{ ticket.building }}</strong>, Room <strong>{{ ticket.room_number }}</strong></span>
-                <span class="small text-muted">Assignee: <strong>{{ ticket.assigned_to.username|default:"Unassigned" }}</strong></span>
+            
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center bg-light p-3 rounded gap-2">
+                <div class="d-flex flex-column gap-1">
+                    <span class="small text-secondary">📍 Location context: <strong class="text-dark">{{ ticket.building }}</strong>, Room <strong class="text-dark">{{ ticket.room_number }}</strong></span>
+                    <span class="small text-secondary">Assignee: <strong class="text-dark">{{ ticket.assigned_to.username|default:"Unassigned" }}</strong></span>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <a href="{% url 'ticket-update' ticket.pk %}" class="btn btn-sm btn-outline-primary px-3 fw-semibold">
+                        ✏️ Edit Issue
+                    </a>
+                    <a href="{% url 'ticket-delete' ticket.pk %}" class="btn btn-sm btn-outline-danger px-3 fw-semibold">
+                        🗑️ Delete
+                    </a>
+                </div>
             </div>
         </div>
         {% empty %}
@@ -50,7 +62,7 @@
             <ul class="pagination justify-content-center mb-0">
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-item page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">Previous</a>
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.sort_by %}&sort_by={{ request.GET.sort_by }}{% endif %}">Previous</a>
                 </li>
                 {% endif %}
                 

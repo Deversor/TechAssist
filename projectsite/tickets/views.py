@@ -81,3 +81,17 @@ class TicketCreateView(LoginRequiredMixin, CreateView):
         # Alerts frontend if request stems from a scanned QR configuration
         context['is_qr'] = 'building' in self.request.GET or 'room' in self.request.GET
         return context
+
+
+class TicketUpdateView(LoginRequiredMixin, UpdateView):
+    model = Ticket
+    # Technicians and admins can edit extra control parameters like status and assignment tracking
+    fields = ['title', 'category', 'description', 'building', 'room_number', 'priority', 'status', 'assigned_to']
+    template_name = 'tickets/ticket_form.html'
+    success_url = reverse_lazy('ticket-list')
+
+
+class TicketDeleteView(LoginRequiredMixin, DeleteView):
+    model = Ticket
+    template_name = 'tickets/ticket_confirm_delete.html'
+    success_url = reverse_lazy('ticket-list')
